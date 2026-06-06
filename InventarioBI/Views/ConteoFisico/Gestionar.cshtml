@@ -1,0 +1,35 @@
+﻿@model InventarioBI.Models.ConteoFisico
+
+@{
+    ViewData["Title"] = "Gestionar Anomalía";
+}
+
+<h2>Gestionar Anomalía</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>@Model.Producto?.Descripcion</h5>
+        <p><strong>Stock Sistema:</strong> @Model.StockSistema</p>
+        <p><strong>Stock Físico:</strong> @Model.StockFisico</p>
+        <p><strong>Diferencia:</strong> <span class="text-danger fw-bold">@Model.Diferencia</span></p>
+        <p><strong>Estado Actual:</strong> <span class="badge bg-warning">@Model.Estado</span></p>
+    </div>
+</div>
+
+<form asp-action="Gestionar" method="post">
+    <input type="hidden" asp-for="IdConteo" />
+
+    <div class="form-group mb-3">
+        <label class="form-label">Nuevo Estado</label>
+        <select asp-for="Estado" class="form-select" required>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Investigado">Investigado</option>
+            <option value="Resuelto">Resuelto</option>
+        </select>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Guardar Cambio</button>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</form>

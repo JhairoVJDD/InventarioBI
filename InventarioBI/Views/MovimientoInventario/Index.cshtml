@@ -1,0 +1,45 @@
+﻿@model IEnumerable<InventarioBI.Models.MovimientoInventario>
+
+<h2>Historial de Movimientos de Inventario</h2>
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Nuevo Movimiento</a>
+    <a asp-action="ExportarExcel" class="btn btn-success">
+        <i class="bi bi-file-earmark-excel"></i> Exportar a Excel
+    </a>
+</div>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Nuevo Movimiento</a>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Stock Anterior</th>
+            <th>Stock Nuevo</th>
+            <th>Usuario</th>
+            <th>Motivo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.Producto?.Descripcion</td>
+                <td>
+                    <span class="badge @(item.TipoMovimiento == "ENTRADA" ? "bg-success" : "bg-danger")">
+                        @item.TipoMovimiento
+                    </span>
+                </td>
+                <td>@item.Cantidad</td>
+                <td>@item.StockAnterior</td>
+                <td>@item.StockNuevo</td>
+                <td>@item.UsuarioResponsable</td>
+                <td>@item.Motivo</td>
+            </tr>
+        }
+    </tbody>
+</table>

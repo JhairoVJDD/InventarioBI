@@ -1,0 +1,25 @@
+﻿@model InventarioBI.Models.Producto
+
+@{
+    ViewData["Title"] = "Eliminar Producto";
+}
+
+<h2>¿Estás seguro de desactivar este producto?</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5>@Model.Descripcion</h5>
+        <p><strong>Código:</strong> @Model.CodigoBarras</p>
+        <p><strong>Stock Actual:</strong> @Model.StockActual</p>
+        <p><strong>Precio Costo:</strong> S/ @Model.PrecioCosto</p>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="IdProducto" />
+    
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">Sí, Desactivar Producto</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

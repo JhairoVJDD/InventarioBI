@@ -1,0 +1,51 @@
+﻿@model InventarioBI.Models.ConteoFisico
+
+@{
+    ViewData["Title"] = "Nuevo Conteo Físico";
+}
+
+<h2>Nuevo Conteo Físico</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group mb-3">
+                <label class="form-label">Producto</label>
+                <select asp-for="IdProducto" class="form-select" required>
+                    <option value="">-- Seleccione un producto --</option>
+                    @foreach (var item in ViewBag.Productos)
+                    {
+                        <option value="@item.IdProducto">
+                            @item.Descripcion (Stock actual: @item.StockActual)
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="StockFisico" class="form-label"></label>
+                <input asp-for="StockFisico" class="form-control" type="number" step="0.01" required />
+                <span asp-validation-for="StockFisico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Tienda</label>
+                <input type="text" value="Tienda Principal" class="form-control" disabled />
+                <input asp-for="IdTienda" type="hidden" value="1" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Registrar Conteo Físico</button>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

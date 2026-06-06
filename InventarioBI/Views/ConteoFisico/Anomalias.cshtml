@@ -1,0 +1,45 @@
+﻿@model IEnumerable<InventarioBI.Models.ConteoFisico>
+
+@{
+    ViewData["Title"] = "Gestión de Anomalías";
+}
+
+<h2>Gestión de Anomalías Pendientes</h2>
+
+<div class="alert alert-info">
+    Total de anomalías pendientes: <strong>@Model.Count()</strong>
+</div>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Stock Sistema</th>
+            <th>Stock Físico</th>
+            <th>Diferencia</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FechaConteo.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.Producto?.Descripcion</td>
+                <td>@item.StockSistema</td>
+                <td>@item.StockFisico</td>
+                <td class="fw-bold text-danger">@item.Diferencia</td>
+                <td>
+                    <span class="badge bg-warning">@item.Estado</span>
+                </td>
+                <td>
+                    <a asp-action="Gestionar" asp-route-id="@item.IdConteo" class="btn btn-sm btn-primary">Gestionar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver a Todos los Conteos</a>
