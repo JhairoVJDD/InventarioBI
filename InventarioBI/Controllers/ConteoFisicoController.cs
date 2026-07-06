@@ -60,7 +60,8 @@ namespace InventarioBI.Controllers
 
                 conteoFisico.StockSistema = producto.StockActual;
                 conteoFisico.FechaConteo = DateTime.Now;
-                conteoFisico.Estado = Math.Abs(conteoFisico.Diferencia) > 0 ? "Pendiente" : "Resuelto";
+                // Determinar estado basado en si hay diferencia entre stock físico y sistema
+                conteoFisico.Estado = conteoFisico.Diferencia != 0 ? "Pendiente" : "Resuelto";
 
                 _context.Add(conteoFisico);
                 await _context.SaveChangesAsync();

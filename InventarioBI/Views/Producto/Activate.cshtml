@@ -1,0 +1,26 @@
+@model InventarioBI.Models.Producto
+
+@{
+    ViewData["Title"] = "Reactivar Producto";
+}
+
+<h2>¿Reactivar este producto?</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5>@Model.Descripcion</h5>
+        <p><strong>Código:</strong> @Model.CodigoBarras</p>
+        <p><strong>Stock Actual:</strong> @Model.StockActual</p>
+        <p><strong>Precio Costo:</strong> S/ @Model.PrecioCosto</p>
+        <p class="text-muted">Este producto volverá a estar disponible en el sistema.</p>
+    </div>
+</div>
+
+<form asp-action="Activate" method="post">
+    <input type="hidden" asp-for="IdProducto" />
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">✓ Sí, Reactivar Producto</button>
+        <a asp-action="Inactivos" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

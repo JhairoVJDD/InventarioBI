@@ -1,0 +1,49 @@
+@model IEnumerable<InventarioBI.Models.Producto>
+
+@{
+    ViewData["Title"] = "Productos Desactivados";
+}
+
+<h2>Productos Desactivados</h2>
+
+<div class="mb-3">
+    <a asp-action="Index" class="btn btn-primary">← Volver a Activos</a>
+</div>
+
+@if (Model.Any())
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Código de Barras</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Stock Actual</th>
+                <th>Precio Costo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>@item.CodigoBarras</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.Categoria</td>
+                    <td><strong>@item.StockActual</strong></td>
+                    <td>S/ @item.PrecioCosto</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdProducto" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Activate" asp-route-id="@item.IdProducto" class="btn btn-success btn-sm">✓ Reactivar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        <strong>ℹ️ No hay productos desactivados.</strong>
+    </div>
+}

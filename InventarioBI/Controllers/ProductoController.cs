@@ -20,11 +20,22 @@ namespace InventarioBI.Controllers
 
         }
 
-        // GET: Lista de Productos
+        // GET: Lista de Productos Activos
         public async Task<IActionResult> Index()
         {
             var productos = await _context.Productos
                 .Where(p => p.Activo)
+                .OrderBy(p => p.Descripcion)
+                .ToListAsync();
+
+            return View(productos);
+        }
+
+        // GET: Lista de Productos Desactivados
+        public async Task<IActionResult> Inactivos()
+        {
+            var productos = await _context.Productos
+                .Where(p => !p.Activo)
                 .OrderBy(p => p.Descripcion)
                 .ToListAsync();
 
@@ -104,6 +115,29 @@ namespace InventarioBI.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Activar Producto (mostrar confirmación)
+        public async Task<IActionResult> Activate(int id)
+        {
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null) return NotFound();
+            return View(producto);
+        }
+
+        // POST: Activar Producto
+        [HttpPost, ActionName("Activate")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActivateConfirmed(int id)
+        {
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto != null)
+            {
+                producto.Activo = true;
+                await _context.SaveChangesAsync();
+                TempData["Success"] = $"Producto '{producto.Descripcion}' reactivado exitosamente.";
+            }
+            return RedirectToAction(nameof(Inactivos));
         }
 
         private bool ProductoExists(int id)

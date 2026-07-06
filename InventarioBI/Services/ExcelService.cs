@@ -39,6 +39,7 @@ namespace InventarioBI.Services
             worksheet.Columns().AdjustToContents();
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
+            stream.Position = 0;
             return stream.ToArray();
         }
 
@@ -69,6 +70,7 @@ namespace InventarioBI.Services
             worksheet.Columns().AdjustToContents();
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
+            stream.Position = 0;
             return stream.ToArray();
         }
     public byte[] ExportarProductos(IEnumerable<Producto> productos)
@@ -98,7 +100,8 @@ namespace InventarioBI.Services
             worksheet.Columns().AdjustToContents();
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
+            stream.Position = 0;
             return stream.ToArray();
-            }
         }
+    }
 }

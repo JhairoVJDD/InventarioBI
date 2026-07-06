@@ -56,6 +56,18 @@ namespace InventarioBI.Controllers
                 movimiento.Fecha = DateTime.Now;
                 movimiento.UsuarioResponsable = User.Identity?.Name ?? "Sistema";
 
+                // Validar que no haya stock negativo en salidas/mermas
+                if ((movimiento.TipoMovimiento.ToUpper() == "SALIDA" || movimiento.TipoMovimiento.ToUpper() == "MERMA")
+                    && (producto.StockActual - movimiento.Cantidad) < 0)
+                {
+                    ModelState.AddModelError("Cantidad", $"Stock insuficiente. Disponible: {producto.StockActual}");
+                    ViewBag.Productos = await _context.Productos
+                        .Where(p => p.Activo)
+                        .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
+                        .ToListAsync();
+                    return View(movimiento);
+                }
+
                 switch (movimiento.TipoMovimiento.ToUpper())
                 {
                     case "ENTRADA":
@@ -77,6 +89,10 @@ namespace InventarioBI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Productos = await _context.Productos
+                .Where(p => p.Activo)
+                .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
+                .ToListAsync();
             return View(movimiento);
         }
 
