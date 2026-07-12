@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventarioBI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>   // ← Cambiar aquí
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>   
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -14,6 +14,8 @@ namespace InventarioBI.Data
 
         // Tus tablas
         public DbSet<Producto> Productos { get; set; } = null!;
+        public DbSet<Categoria> Categorias { get; set; } = null!;
+        public DbSet<Marca> Marcas { get; set; } = null!;
         public DbSet<MovimientoInventario> MovimientosInventario { get; set; } = null!;
         public DbSet<ConteoFisico> ConteosFisicos { get; set; } = null!;
         public DbSet<Tienda> Tiendas { get; set; } = null!;
@@ -21,7 +23,7 @@ namespace InventarioBI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);   // ← Muy importante
+            base.OnModelCreating(modelBuilder);   
 
             // Configuración de precisión decimal
             modelBuilder.Entity<Producto>()

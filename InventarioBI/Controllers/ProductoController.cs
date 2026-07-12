@@ -43,8 +43,10 @@ namespace InventarioBI.Controllers
         }
 
         // GET: Crear Producto
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Categorias = await _context.Categorias.Where(c => c.Activa).OrderBy(c => c.Nombre).ToListAsync();
+            ViewBag.Marcas = await _context.Marcas.Where(m => m.Activa).OrderBy(m => m.Nombre).ToListAsync();
             return View();
         }
 
@@ -60,6 +62,8 @@ namespace InventarioBI.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Categorias = await _context.Categorias.Where(c => c.Activa).OrderBy(c => c.Nombre).ToListAsync();
+            ViewBag.Marcas = await _context.Marcas.Where(m => m.Activa).OrderBy(m => m.Nombre).ToListAsync();
             return View(producto);
         }
 
@@ -68,6 +72,8 @@ namespace InventarioBI.Controllers
         {
             var producto = await _context.Productos.FindAsync(id);
             if (producto == null) return NotFound();
+            ViewBag.Categorias = await _context.Categorias.Where(c => c.Activa).OrderBy(c => c.Nombre).ToListAsync();
+            ViewBag.Marcas = await _context.Marcas.Where(m => m.Activa).OrderBy(m => m.Nombre).ToListAsync();
             return View(producto);
         }
 
@@ -92,6 +98,8 @@ namespace InventarioBI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Categorias = await _context.Categorias.Where(c => c.Activa).OrderBy(c => c.Nombre).ToListAsync();
+            ViewBag.Marcas = await _context.Marcas.Where(m => m.Activa).OrderBy(m => m.Nombre).ToListAsync();
             return View(producto);
         }
 

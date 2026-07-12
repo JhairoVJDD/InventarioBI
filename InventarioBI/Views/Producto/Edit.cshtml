@@ -23,7 +23,15 @@
 
             <div class="form-group mb-3">
                 <label asp-for="Categoria" class="form-label"></label>
-                <input asp-for="Categoria" class="form-control" />
+                <select asp-for="Categoria" class="form-select" asp-items="@(new SelectList(ViewBag.Categorias, "IdCategoria", "Nombre"))" required>
+                    <option value="">Seleccionar Categoría</option>
+                </select>
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Subcategoria" class="form-label"></label>
+                <input asp-for="Subcategoria" class="form-control" />
             </div>
 
             <div class="form-group mb-3">
@@ -45,7 +53,10 @@
 
             <div class="form-group mb-3">
                 <label asp-for="Marca" class="form-label"></label>
-                <input asp-for="Marca" class="form-control" />
+                <select asp-for="Marca" class="form-select" asp-items="@(new SelectList(ViewBag.Marcas, "IdMarca", "Nombre"))">
+                    <option value="">Seleccionar Marca (opcional)</option>
+                </select>
+                <span asp-validation-for="Marca" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
