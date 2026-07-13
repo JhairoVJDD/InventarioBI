@@ -15,9 +15,9 @@ namespace InventarioBI.Models
         public decimal StockFisico { get; set; }
         public decimal Diferencia => StockFisico - StockSistema;
 
-        public string Estado { get; set; } = "Pendiente"; // Pendiente, Investigado, Resuelto
+        public string Estado { get; set; } = "Pendiente"; 
 
-        public string Comentario { get; set; } = string.Empty; // Para que el usuario pueda agregar comentarios al gestionar la anomalía
+        public string Comentario { get; set; } = string.Empty; 
         public DateTime FechaConteo { get; set; } = DateTime.Now;
     }
 }

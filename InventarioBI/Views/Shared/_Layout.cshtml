@@ -14,26 +14,27 @@
         body, p, h1, h2, h3, h4, h5, h6, a, span, button, input, select, textarea, td, th, label {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        body { background: #0b1120; }
+        body { background: #121214; }
 
         /* ── Navbar (Top Bar) ── */
         .main-header.navbar {
-            background: linear-gradient(90deg, #0d1b2a 0%, #162a4a 100%) !important;
-            border-bottom: 1px solid rgba(59,130,246,0.15);
+            background: linear-gradient(90deg, #1c0505 0%, #2a0808 100%) !important;
+            border-bottom: 1px solid rgba(227,6,19,0.2);
         }
         .main-header .nav-link { color: rgba(255,255,255,0.85) !important; }
-        .main-header .nav-link:hover { color: #60a5fa !important; }
+        .main-header .nav-link:hover { color: #ff6b6b !important; }
 
         /* ── Sidebar ── */
         .main-sidebar {
-            background: linear-gradient(180deg, #0a1628 0%, #122240 50%, #1a3a6c 100%) !important;
-            border-right: 1px solid rgba(59,130,246,0.12);
+            background: linear-gradient(180deg, #101012 0%, #161619 50%, #201313 100%) !important;
+            border-right: 1px solid rgba(227,6,19,0.15);
         }
         .brand-link {
-            border-bottom: 1px solid rgba(59,130,246,0.15) !important;
+            border-bottom: 1px solid rgba(227,6,19,0.2) !important;
             padding: 14px 16px !important;
+            background: #101012 !important;
         }
-        .brand-text { color: #fff !important; font-weight: 600 !important; letter-spacing: 0.5px; }
+        .brand-text { color: #fff !important; font-weight: 700 !important; letter-spacing: 0.5px; }
         .nav-sidebar .nav-link {
             color: rgba(255,255,255,0.75) !important;
             border-radius: 8px !important;
@@ -41,37 +42,51 @@
             transition: all 0.25s ease !important;
         }
         .nav-sidebar .nav-link:hover {
-            background: rgba(59,130,246,0.2) !important;
+            background: rgba(227,6,19,0.15) !important;
             color: #fff !important;
             transform: translateX(4px);
         }
         .nav-sidebar .nav-link.active {
-            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+            background: linear-gradient(135deg, #e30613, #ff4d4d) !important;
             color: #fff !important;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.4);
+            box-shadow: 0 4px 15px rgba(227,6,19,0.35);
         }
         .nav-icon { color: rgba(255,255,255,0.6) !important; }
         .nav-link.active .nav-icon { color: #fff !important; }
 
-        /* ── Content Area ── */
+        /* ── Content Area with Watermark ── */
         .content-wrapper {
-            background: linear-gradient(135deg, #0b1120 0%, #101d30 50%, #0f1a2e 100%) !important;
+            background: linear-gradient(135deg, #121214 0%, #18181b 50%, #141416 100%) !important;
             color: #e2e8f0;
+            position: relative;
+        }
+        .content-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120'%3E%3Crect width='175' height='75' x='10' y='22' rx='10' fill='%23e30613' opacity='0.02'/%3E%3Ctext x='25' y='72' font-family='Impact, sans-serif' font-weight='900' font-size='42' fill='%23ffffff' opacity='0.02' font-style='italic'%3EPRECIO%3C/text%3E%3Ctext x='195' y='72' font-family='Impact, sans-serif' font-weight='900' font-size='42' fill='%23facc15' opacity='0.02' font-style='italic'%3Euno%3C/text%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: min(450px, 70%) auto;
+            pointer-events: none;
+            z-index: 0;
         }
         .content-header h1, .content-header small { color: #f1f5f9 !important; }
 
-        /* ── Cards (Glassmorphism) ── */
+        /* ── Cards (Glassmorphism with Red accents) ── */
         .card {
-            background: rgba(15, 25, 50, 0.85) !important;
-            border: 1px solid rgba(59,130,246,0.12) !important;
+            background: rgba(20, 20, 22, 0.85) !important;
+            border: 1px solid rgba(227,6,19,0.12) !important;
             border-radius: 12px !important;
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             color: #e2e8f0;
+            position: relative;
+            z-index: 1;
         }
         .card-header {
-            background: rgba(20, 35, 65, 0.6) !important;
-            border-bottom: 1px solid rgba(59,130,246,0.1) !important;
+            background: rgba(30, 20, 20, 0.6) !important;
+            border-bottom: 1px solid rgba(227,6,19,0.15) !important;
             border-radius: 12px 12px 0 0 !important;
         }
         .card-title { color: #f1f5f9 !important; font-weight: 600 !important; }
@@ -81,41 +96,41 @@
             color: #ffffff !important; 
         }
         .table thead th {
-            background: rgba(15, 30, 60, 0.95) !important;
-            color: #94a3b8 !important;
-            border-bottom: 2px solid rgba(59,130,246,0.25) !important;
+            background: rgba(25, 20, 20, 0.95) !important;
+            color: #e2e8f0 !important;
+            border-bottom: 2px solid rgba(227,6,19,0.35) !important;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 0.5px;
         }
         .table-dark th {
-            background: rgba(15, 30, 60, 0.95) !important;
-            color: #94a3b8 !important;
+            background: rgba(25, 20, 20, 0.95) !important;
+            color: #e2e8f0 !important;
         }
         .table tbody tr { 
-            border-bottom: 1px solid rgba(59,130,246,0.08) !important; 
+            border-bottom: 1px solid rgba(227,6,19,0.08) !important; 
         }
         .table-striped tbody tr:nth-of-type(odd) td { 
-            background-color: rgba(255, 255, 255, 0.03) !important; 
+            background-color: rgba(255, 255, 255, 0.02) !important; 
         }
         .table-striped tbody tr:nth-of-type(even) td { 
-            background-color: rgba(10, 20, 40, 0.4) !important; 
+            background-color: rgba(15, 15, 18, 0.4) !important; 
         }
         .table tbody tr:hover td { 
-            background-color: rgba(59, 130, 246, 0.18) !important; 
+            background-color: rgba(227, 6, 19, 0.12) !important; 
             color: #ffffff !important;
         }
 
         /* ── Form Controls ── */
         .form-control, .form-select {
-            background: rgba(15, 25, 50, 0.8) !important;
-            border: 1px solid rgba(59,130,246,0.2) !important;
+            background: rgba(20, 20, 22, 0.8) !important;
+            border: 1px solid rgba(227,6,19,0.2) !important;
             color: #e2e8f0 !important;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+            border-color: #e30613 !important;
+            box-shadow: 0 0 0 3px rgba(227,6,19,0.15) !important;
         }
         .form-label { color: #94a3b8 !important; font-weight: 500; }
 
@@ -141,9 +156,11 @@
 
         /* ── Footer ── */
         .main-footer {
-            background: #0d1b2a !important;
-            border-top: 1px solid rgba(59,130,246,0.1) !important;
+            background: #101012 !important;
+            border-top: 1px solid rgba(227,6,19,0.1) !important;
             color: rgba(255,255,255,0.5) !important;
+            position: relative;
+            z-index: 1;
         }
 
         /* ── Badges ── */
@@ -154,9 +171,9 @@
 
         /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0b1120; }
-        ::-webkit-scrollbar-thumb { background: #1e3a6c; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+        ::-webkit-scrollbar-track { background: #121214; }
+        ::-webkit-scrollbar-thumb { background: #3a1515; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e30613; }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -171,8 +188,8 @@
         <ul class="navbar-nav ml-auto" style="display:flex;align-items:center;gap:12px;margin-right:16px;">
             <li class="nav-item">
                 <span class="nav-link" style="font-size:0.85rem;color:rgba(255,255,255,0.85) !important;">
-                    <i class="fas fa-user-circle" style="margin-right:6px;color:#3b82f6;font-size:1rem;"></i>
-                    Bienvenido, <strong style="color:#60a5fa;">@User.Identity?.Name</strong>
+                    <i class="fas fa-user-circle" style="margin-right:6px;color:#e30613;font-size:1.1rem;"></i>
+                    Bienvenido, <strong style="color:#ff6b6b;">@User.Identity?.Name</strong>
                 </span>
             </li>
             <li class="nav-item">
@@ -190,8 +207,11 @@
 
     <!-- Main Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="@Url.Action("Index", "Dashboard")" class="brand-link" style="text-decoration:none;">
-            <span class="brand-text" style="font-size:1.1rem;">📦 Inventario BI</span>
+        <a href="@Url.Action("Index", "Dashboard")" class="brand-link" style="text-decoration:none; display:flex; align-items:center; justify-content:center; padding:12px 16px !important;">
+            <span class="brand-text" style="display: flex; align-items: center; gap: 5px; font-family: 'Impact', 'Inter', sans-serif;">
+                <span style="background: #e30613; color: #fff; padding: 2px 10px; border-radius: 4px; font-style: italic; font-weight: 900; font-size: 1.15rem; letter-spacing: -0.5px; box-shadow: 0 2px 6px rgba(227,6,19,0.35);">PRECIO</span>
+                <span style="color: #facc15; font-weight: 900; font-style: italic; font-size: 1.35rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); margin-left: 2px;">uno</span>
+            </span>
         </a>
         <div class="sidebar">
             <div style="padding:16px 12px 8px;color:rgba(255,255,255,0.35);font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;">

@@ -63,14 +63,18 @@ namespace InventarioBI.Data
             {
                 var tiendaPrincipal = tiendasList.FirstOrDefault(t => t.Nombre.Contains("Principal")) ?? tiendasList[0];
                 var tiendaExpress = tiendasList.FirstOrDefault(t => t.Nombre.Contains("Express")) ?? tiendasList[0];
-                var almacenCentral = tiendasList.FirstOrDefault(t => t.Nombre.Contains("Almacén")) ?? tiendasList[0];
-
-                // Sembrar MovimientosInventario
-                if (!await db.MovimientosInventario.AnyAsync())
+                var almacenCentral = tiendasList.FirstOrDefault(t => t.Nombre.Contains("Almacén")) ?? tiendasList[0];                // Sembrar MovimientosInventario
+                var movCount = await db.MovimientosInventario.CountAsync();
+                if (movCount < 10)
                 {
+                    db.MovimientosInventario.RemoveRange(db.MovimientosInventario);
+                    await db.SaveChangesAsync();
+
                     var producto1 = productos[0];
                     var producto2 = productos.Count > 1 ? productos[1] : productos[0];
                     var producto3 = productos.Count > 2 ? productos[2] : productos[0];
+                    var producto4 = productos.Count > 3 ? productos[3] : productos[0];
+                    var producto5 = productos.Count > 4 ? productos[4] : productos[0];
 
                     var movimientos = new[]
                     {
@@ -80,12 +84,51 @@ namespace InventarioBI.Data
                             Producto = producto1,
                             IdTienda = tiendaPrincipal.IdTienda,
                             TipoMovimiento = "ENTRADA",
+                            Cantidad = 100.000m,
+                            StockAnterior = 0.000m,
+                            StockNuevo = 100.000m,
+                            Motivo = "Carga inicial de stock",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-10)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto2.IdProducto,
+                            Producto = producto2,
+                            IdTienda = tiendaExpress.IdTienda,
+                            TipoMovimiento = "ENTRADA",
                             Cantidad = 50.000m,
                             StockAnterior = 0.000m,
                             StockNuevo = 50.000m,
-                            Motivo = "Carga inicial de inventario",
+                            Motivo = "Reabastecimiento Tienda Express",
                             UsuarioResponsable = "admin@inventario.com",
-                            Fecha = DateTime.Now.AddDays(-5)
+                            Fecha = DateTime.Now.AddDays(-9)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto3.IdProducto,
+                            Producto = producto3,
+                            IdTienda = almacenCentral.IdTienda,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = 200.000m,
+                            StockAnterior = 0.000m,
+                            StockNuevo = 200.000m,
+                            Motivo = "Ingreso de importación",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-8)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto1.IdProducto,
+                            Producto = producto1,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 15.000m,
+                            StockAnterior = 100.000m,
+                            StockNuevo = 85.000m,
+                            Motivo = "Ventas registradas POS",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-7)
                         },
                         new MovimientoInventario
                         {
@@ -93,25 +136,181 @@ namespace InventarioBI.Data
                             Producto = producto2,
                             IdTienda = tiendaExpress.IdTienda,
                             TipoMovimiento = "SALIDA",
-                            Cantidad = 5.000m,
-                            StockAnterior = 20.000m,
-                            StockNuevo = 15.000m,
-                            Motivo = "Venta del día",
+                            Cantidad = 10.000m,
+                            StockAnterior = 50.000m,
+                            StockNuevo = 40.000m,
+                            Motivo = "Ventas registradas POS",
                             UsuarioResponsable = "admin@inventario.com",
-                            Fecha = DateTime.Now.AddDays(-2)
+                            Fecha = DateTime.Now.AddDays(-6)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto4.IdProducto,
+                            Producto = producto4,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = 80.000m,
+                            StockAnterior = 0.000m,
+                            StockNuevo = 80.000m,
+                            Motivo = "Carga inicial de stock",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-5)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto5.IdProducto,
+                            Producto = producto5,
+                            IdTienda = almacenCentral.IdTienda,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = 120.000m,
+                            StockAnterior = 0.000m,
+                            StockNuevo = 120.000m,
+                            Motivo = "Ingreso por lote nuevo",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-4)
                         },
                         new MovimientoInventario
                         {
                             IdProducto = producto3.IdProducto,
                             Producto = producto3,
                             IdTienda = almacenCentral.IdTienda,
-                            TipoMovimiento = "AJUSTE",
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 40.000m,
+                            StockAnterior = 200.000m,
+                            StockNuevo = 160.000m,
+                            Motivo = "Despacho a sucursales",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-3)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto4.IdProducto,
+                            Producto = producto4,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "MERMA",
                             Cantidad = 2.000m,
-                            StockAnterior = 10.000m,
-                            StockNuevo = 12.000m,
-                            Motivo = "Ajuste por ingreso de mercadería sobrante",
+                            StockAnterior = 80.000m,
+                            StockNuevo = 78.000m,
+                            Motivo = "Producto defectuoso detectado en almacén",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-3)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto5.IdProducto,
+                            Producto = producto5,
+                            IdTienda = almacenCentral.IdTienda,
+                            TipoMovimiento = "AJUSTE",
+                            Cantidad = 5.000m,
+                            StockAnterior = 120.000m,
+                            StockNuevo = 125.000m,
+                            Motivo = "Ajuste por inventario sobrante",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-2)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto1.IdProducto,
+                            Producto = producto1,
+                            IdTienda = tiendaExpress.IdTienda,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = 30.000m,
+                            StockAnterior = 0.000m,
+                            StockNuevo = 30.000m,
+                            Motivo = "Transferencia entre tiendas",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-2)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto2.IdProducto,
+                            Producto = producto2,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 8.000m,
+                            StockAnterior = 100.000m,
+                            StockNuevo = 92.000m,
+                            Motivo = "Ventas del fin de semana",
                             UsuarioResponsable = "admin@inventario.com",
                             Fecha = DateTime.Now.AddDays(-1)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto3.IdProducto,
+                            Producto = producto3,
+                            IdTienda = tiendaExpress.IdTienda,
+                            TipoMovimiento = "MERMA",
+                            Cantidad = 1.000m,
+                            StockAnterior = 40.000m,
+                            StockNuevo = 39.000m,
+                            Motivo = "Merma por ruptura de empaque",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddDays(-1)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto1.IdProducto,
+                            Producto = producto1,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 10.000m,
+                            StockAnterior = 85.000m,
+                            StockNuevo = 75.000m,
+                            Motivo = "Ventas del fin de semana",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddHours(-18)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto4.IdProducto,
+                            Producto = producto4,
+                            IdTienda = tiendaExpress.IdTienda,
+                            TipoMovimiento = "AJUSTE",
+                            Cantidad = 3.000m,
+                            StockAnterior = 15.000m,
+                            StockNuevo = 12.000m,
+                            Motivo = "Ajuste por conteo físico faltante",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddHours(-12)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto5.IdProducto,
+                            Producto = producto5,
+                            IdTienda = tiendaPrincipal.IdTienda,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 4.000m,
+                            StockAnterior = 30.000m,
+                            StockNuevo = 26.000m,
+                            Motivo = "Venta POS",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddHours(-6)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto3.IdProducto,
+                            Producto = producto3,
+                            IdTienda = almacenCentral.IdTienda,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = 50.000m,
+                            StockAnterior = 160.000m,
+                            StockNuevo = 210.000m,
+                            Motivo = "Ingreso de proveedor local",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddHours(-2)
+                        },
+                        new MovimientoInventario
+                        {
+                            IdProducto = producto2.IdProducto,
+                            Producto = producto2,
+                            IdTienda = tiendaExpress.IdTienda,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = 3.000m,
+                            StockAnterior = 40.000m,
+                            StockNuevo = 37.000m,
+                            Motivo = "Venta POS rápida",
+                            UsuarioResponsable = "admin@inventario.com",
+                            Fecha = DateTime.Now.AddMinutes(-30)
                         }
                     };
 

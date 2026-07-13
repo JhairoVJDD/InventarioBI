@@ -107,7 +107,7 @@
             <div class="col-lg-8 col-12 mb-3">
                 <div class="card" style="height:100%;">
                     <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 class="card-title" style="margin:0;"><i class="fas fa-chart-bar" style="color:#3b82f6;margin-right:8px;"></i>Top Productos con más Movimientos</h3>
+                        <h3 class="card-title" style="margin:0;"><i class="fas fa-chart-bar" style="color:#e30613;margin-right:8px;"></i>Top Productos con más Movimientos</h3>
                     </div>
                     <div class="card-body" style="padding:20px;">
                         <canvas id="topProductosChart" style="height:300px;max-height:300px;"></canvas>
@@ -119,7 +119,7 @@
             <div class="col-lg-4 col-12 mb-3">
                 <div class="card" style="height:100%;">
                     <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 class="card-title" style="margin:0;"><i class="fas fa-chart-pie" style="color:#8b5cf6;margin-right:8px;"></i>Movimientos por Tipo</h3>
+                        <h3 class="card-title" style="margin:0;"><i class="fas fa-chart-pie" style="color:#facc15;margin-right:8px;"></i>Movimientos por Tipo</h3>
                     </div>
                     <div class="card-body" style="display:flex;align-items:center;justify-content:center;padding:20px;">
                         <canvas id="tipoMovimientosChart" style="max-height:300px;"></canvas>
@@ -133,10 +133,11 @@
             <!-- Stats card 1: Tiendas -->
             <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <a href="@Url.Action("Index","Tienda")" style="text-decoration:none;display:block;">
-                    <div style="background:rgba(15,25,50,0.85);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
-                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(20,35,70,0.9)';this.style.borderColor='rgba(59,130,246,0.3)';"
-                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(15,25,50,0.85)';this.style.borderColor='rgba(59,130,246,0.12)';">
-                        <i class="fas fa-store" style="font-size:2.2rem;color:#3b82f6;margin-bottom:10px;"></i>
+                    <div style="background:rgba(30,20,20,0.85);border:1px solid rgba(227,6,19,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
+                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(45,20,20,0.9)';this.style.borderColor='rgba(227,6,19,0.3)';"
+                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(30,20,20,0.85)';this.style.borderColor='rgba(227,6,19,0.12)';"
+                         class="card-inner">
+                        <i class="fas fa-store" style="font-size:2.2rem;color:#ef4444;margin-bottom:10px;"></i>
                         <h4 style="font-size:1.9rem;font-weight:700;color:#f1f5f9;margin:4px 0;">@Model.TotalTiendas</h4>
                         <p style="color:rgba(255,255,255,0.55);font-size:0.85rem;margin:0;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;">Tiendas Activas</p>
                     </div>
@@ -146,10 +147,11 @@
             <!-- Stats card 2: Categorías -->
             <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <a href="@Url.Action("Index","Producto")" style="text-decoration:none;display:block;">
-                    <div style="background:rgba(15,25,50,0.85);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
-                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(20,35,70,0.9)';this.style.borderColor='rgba(59,130,246,0.3)';"
-                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(15,25,50,0.85)';this.style.borderColor='rgba(59,130,246,0.12)';">
-                        <i class="fas fa-tags" style="font-size:2.2rem;color:#8b5cf6;margin-bottom:10px;"></i>
+                    <div style="background:rgba(30,20,20,0.85);border:1px solid rgba(227,6,19,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
+                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(45,20,20,0.9)';this.style.borderColor='rgba(227,6,19,0.3)';"
+                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(30,20,20,0.85)';this.style.borderColor='rgba(227,6,19,0.12)';"
+                         class="card-inner">
+                        <i class="fas fa-tags" style="font-size:2.2rem;color:#facc15;margin-bottom:10px;"></i>
                         <h4 style="font-size:1.9rem;font-weight:700;color:#f1f5f9;margin:4px 0;">@Model.TotalCategorias</h4>
                         <p style="color:rgba(255,255,255,0.55);font-size:0.85rem;margin:0;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;">Categorías Activas</p>
                     </div>
@@ -159,9 +161,10 @@
             <!-- Stats card 3: Conteos -->
             <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <a href="@Url.Action("Index","ConteoFisico")" style="text-decoration:none;display:block;">
-                    <div style="background:rgba(15,25,50,0.85);border:1px solid rgba(59,130,246,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
-                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(20,35,70,0.9)';this.style.borderColor='rgba(59,130,246,0.3)';"
-                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(15,25,50,0.85)';this.style.borderColor='rgba(59,130,246,0.12)';">
+                    <div style="background:rgba(30,20,20,0.85);border:1px solid rgba(227,6,19,0.12);border-radius:12px;padding:24px 20px;text-align:center;backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:pointer;"
+                         onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(45,20,20,0.9)';this.style.borderColor='rgba(227,6,19,0.3)';"
+                         onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(30,20,20,0.85)';this.style.borderColor='rgba(227,6,19,0.12)';"
+                         class="card-inner">
                         <i class="fas fa-clipboard-check" style="font-size:2.2rem;color:#10b981;margin-bottom:10px;"></i>
                         <h4 style="font-size:1.9rem;font-weight:700;color:#f1f5f9;margin:4px 0;">@Model.UltimosConteos.Count</h4>
                         <p style="color:rgba(255,255,255,0.55);font-size:0.85rem;margin:0;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;">Últimos Conteos</p>
@@ -246,7 +249,7 @@
     <script>
         // ── Chart.js Global Config (Dark Theme) ──
         Chart.defaults.color = 'rgba(255,255,255,0.6)';
-        Chart.defaults.borderColor = 'rgba(59,130,246,0.08)';
+        Chart.defaults.borderColor = 'rgba(227,6,19,0.08)';
         Chart.defaults.font.family = "'Inter', sans-serif";
 
         // ── 1. Top Productos Bar Chart ──
@@ -256,8 +259,8 @@
         const ctxTop = document.getElementById('topProductosChart');
         if (ctxTop) {
             const gradientBar = ctxTop.getContext('2d').createLinearGradient(0, 0, 0, 300);
-            gradientBar.addColorStop(0, 'rgba(59,130,246,0.8)');
-            gradientBar.addColorStop(1, 'rgba(139,92,246,0.4)');
+            gradientBar.addColorStop(0, 'rgba(227,6,19,0.85)');
+            gradientBar.addColorStop(1, 'rgba(250,204,21,0.5)');
 
             new Chart(ctxTop, {
                 type: 'bar',
@@ -267,7 +270,7 @@
                         label: 'Movimientos',
                         data: topData,
                         backgroundColor: gradientBar,
-                        borderColor: 'rgba(59,130,246,0.6)',
+                        borderColor: 'rgba(227,6,19,0.7)',
                         borderWidth: 1,
                         borderRadius: 8,
                         barPercentage: 0.6
@@ -282,7 +285,7 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(59,130,246,0.06)' },
+                            grid: { color: 'rgba(227,6,19,0.06)' },
                             ticks: { stepSize: 1 }
                         },
                         x: {
