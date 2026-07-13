@@ -1,50 +1,203 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Inventario BI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .main-sidebar { background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 100%); }
-        .nav-sidebar .nav-link { color: rgba(255,255,255,0.9) !important; }
-        .nav-sidebar .nav-link:hover, .nav-sidebar .nav-link.active { background-color: rgba(255,255,255,0.2) !important; color: white !important; }
-        .content-wrapper { background: #f4f6f9; }
-        .small-box { transition: transform 0.3s; }
-        .small-box:hover { transform: translateY(-5px); }
+        /* ── Base & Typography ── */
+        body, p, h1, h2, h3, h4, h5, h6, a, span, button, input, select, textarea, td, th, label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body { background: #0b1120; }
+
+        /* ── Navbar (Top Bar) ── */
+        .main-header.navbar {
+            background: linear-gradient(90deg, #0d1b2a 0%, #162a4a 100%) !important;
+            border-bottom: 1px solid rgba(59,130,246,0.15);
+        }
+        .main-header .nav-link { color: rgba(255,255,255,0.85) !important; }
+        .main-header .nav-link:hover { color: #60a5fa !important; }
+
+        /* ── Sidebar ── */
+        .main-sidebar {
+            background: linear-gradient(180deg, #0a1628 0%, #122240 50%, #1a3a6c 100%) !important;
+            border-right: 1px solid rgba(59,130,246,0.12);
+        }
+        .brand-link {
+            border-bottom: 1px solid rgba(59,130,246,0.15) !important;
+            padding: 14px 16px !important;
+        }
+        .brand-text { color: #fff !important; font-weight: 600 !important; letter-spacing: 0.5px; }
+        .nav-sidebar .nav-link {
+            color: rgba(255,255,255,0.75) !important;
+            border-radius: 8px !important;
+            margin: 2px 8px !important;
+            transition: all 0.25s ease !important;
+        }
+        .nav-sidebar .nav-link:hover {
+            background: rgba(59,130,246,0.2) !important;
+            color: #fff !important;
+            transform: translateX(4px);
+        }
+        .nav-sidebar .nav-link.active {
+            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 15px rgba(37,99,235,0.4);
+        }
+        .nav-icon { color: rgba(255,255,255,0.6) !important; }
+        .nav-link.active .nav-icon { color: #fff !important; }
+
+        /* ── Content Area ── */
+        .content-wrapper {
+            background: linear-gradient(135deg, #0b1120 0%, #101d30 50%, #0f1a2e 100%) !important;
+            color: #e2e8f0;
+        }
+        .content-header h1, .content-header small { color: #f1f5f9 !important; }
+
+        /* ── Cards (Glassmorphism) ── */
+        .card {
+            background: rgba(15, 25, 50, 0.85) !important;
+            border: 1px solid rgba(59,130,246,0.12) !important;
+            border-radius: 12px !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            color: #e2e8f0;
+        }
+        .card-header {
+            background: rgba(20, 35, 65, 0.6) !important;
+            border-bottom: 1px solid rgba(59,130,246,0.1) !important;
+            border-radius: 12px 12px 0 0 !important;
+        }
+        .card-title { color: #f1f5f9 !important; font-weight: 600 !important; }
+
+        /* ── Tables ── */
+        .table, .table td, .table th { 
+            color: #ffffff !important; 
+        }
+        .table thead th {
+            background: rgba(15, 30, 60, 0.95) !important;
+            color: #94a3b8 !important;
+            border-bottom: 2px solid rgba(59,130,246,0.25) !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .table-dark th {
+            background: rgba(15, 30, 60, 0.95) !important;
+            color: #94a3b8 !important;
+        }
+        .table tbody tr { 
+            border-bottom: 1px solid rgba(59,130,246,0.08) !important; 
+        }
+        .table-striped tbody tr:nth-of-type(odd) td { 
+            background-color: rgba(255, 255, 255, 0.03) !important; 
+        }
+        .table-striped tbody tr:nth-of-type(even) td { 
+            background-color: rgba(10, 20, 40, 0.4) !important; 
+        }
+        .table tbody tr:hover td { 
+            background-color: rgba(59, 130, 246, 0.18) !important; 
+            color: #ffffff !important;
+        }
+
+        /* ── Form Controls ── */
+        .form-control, .form-select {
+            background: rgba(15, 25, 50, 0.8) !important;
+            border: 1px solid rgba(59,130,246,0.2) !important;
+            color: #e2e8f0 !important;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+        }
+        .form-label { color: #94a3b8 !important; font-weight: 500; }
+
+        /* ── KPI Small Boxes ── */
+        .small-box {
+            border-radius: 14px !important;
+            border: none !important;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+            overflow: hidden;
+            position: relative;
+        }
+        .small-box:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4) !important;
+        }
+        .small-box .inner { padding: 18px !important; position: relative; z-index: 2; }
+        .small-box .inner h3 { font-size: 2rem; font-weight: 700; }
+        .small-box .inner p { font-size: 0.9rem; opacity: 0.9; }
+        .small-box .icon {
+            position: absolute; top: 10px; right: 16px;
+            font-size: 4rem; opacity: 0.15; z-index: 1;
+        }
+
+        /* ── Footer ── */
+        .main-footer {
+            background: #0d1b2a !important;
+            border-top: 1px solid rgba(59,130,246,0.1) !important;
+            color: rgba(255,255,255,0.5) !important;
+        }
+
+        /* ── Badges ── */
+        .badge { font-weight: 500; letter-spacing: 0.3px; }
+
+        /* ── Alerts ── */
+        .alert { border-radius: 10px; }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b1120; }
+        ::-webkit-scrollbar-thumb { background: #1e3a6c; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-dark">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto" style="display:flex;align-items:center;gap:12px;margin-right:16px;">
             <li class="nav-item">
-                <span class="nav-link">Bienvenido, <strong>@User.Identity?.Name</strong></span>
+                <span class="nav-link" style="font-size:0.85rem;color:rgba(255,255,255,0.85) !important;">
+                    <i class="fas fa-user-circle" style="margin-right:6px;color:#3b82f6;font-size:1rem;"></i>
+                    Bienvenido, <strong style="color:#60a5fa;">@User.Identity?.Name</strong>
+                </span>
             </li>
             <li class="nav-item">
-                <a asp-area="Identity" asp-page="/Account/Logout" class="nav-link btn btn-outline-danger btn-sm">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </a>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="btn btn-sm" 
+                            style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 500; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(239,68,68,0.2); transition: all 0.2s;"
+                            onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 15px rgba(239,68,68,0.35)';"
+                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.2)';">
+                        <i class="fas fa-sign-out-alt" style="margin-right:4px;"></i> Cerrar Sesión
+                    </button>
+                </form>
             </li>
         </ul>
     </nav>
 
     <!-- Main Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="@Url.Action("Index", "Dashboard")" class="brand-link">
-            <span class="brand-text font-weight-light">📦 Inventario BI</span>
+        <a href="@Url.Action("Index", "Dashboard")" class="brand-link" style="text-decoration:none;">
+            <span class="brand-text" style="font-size:1.1rem;">📦 Inventario BI</span>
         </a>
         <div class="sidebar">
-            <nav class="mt-2">
+            <div style="padding:16px 12px 8px;color:rgba(255,255,255,0.35);font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;">
+                Navegación
+            </div>
+            <nav>
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
                     <li class="nav-item">
                         <a href="@Url.Action("Index", "Dashboard")" class="nav-link active">
@@ -71,6 +224,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="@Url.Action("Index", "Tienda")" class="nav-link">
+                            <i class="nav-icon fas fa-store"></i>
+                            <p>Tiendas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="@Url.Action("Anomalias", "ConteoFisico")" class="nav-link">
                             <i class="nav-icon fas fa-exclamation-triangle"></i>
                             <p>Anomalías</p>
@@ -93,7 +252,7 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

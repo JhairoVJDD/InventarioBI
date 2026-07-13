@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InventarioBI.Models.MovimientoInventario>
+@model IEnumerable<InventarioBI.Models.MovimientoInventario>
 
 <h2>Historial de Movimientos de Inventario</h2>
 <div class="mb-3">
@@ -15,6 +15,7 @@
         <tr>
             <th>Fecha</th>
             <th>Producto</th>
+            <th>Tienda</th>
             <th>Tipo</th>
             <th>Cantidad</th>
             <th>Stock Anterior</th>
@@ -26,9 +27,12 @@
     <tbody>
         @foreach (var item in Model)
         {
+            var tiendasDict = (Dictionary<int, string>)ViewBag.Tiendas;
+            var tiendaNombre = tiendasDict != null && tiendasDict.ContainsKey(item.IdTienda) ? tiendasDict[item.IdTienda] : "Desconocida";
             <tr>
                 <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@item.Producto?.Descripcion</td>
+                <td>@tiendaNombre</td>
                 <td>
                     <span class="badge @(item.TipoMovimiento == "ENTRADA" ? "bg-success" : "bg-danger")">
                         @item.TipoMovimiento

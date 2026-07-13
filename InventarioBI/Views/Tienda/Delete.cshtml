@@ -1,0 +1,41 @@
+@model Tienda
+
+@{
+    ViewData["Title"] = "Eliminar Tienda";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-danger">Eliminar Tienda</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h3 class="card-title text-white">¿Estás seguro de que deseas eliminar esta tienda?</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Nombre:</strong> @Model.Nombre</p>
+                        <p><strong>Distrito:</strong> @Model.Distrito</p>
+                        <p><strong>Región:</strong> @Model.Region</p>
+                        <p><strong>Área:</strong> @Model.AreaM2.ToString("N2") m²</p>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post" class="mt-4">
+                    <input type="hidden" asp-for="IdTienda" />
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Eliminar Definitivamente</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

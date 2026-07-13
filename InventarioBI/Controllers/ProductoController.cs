@@ -1,4 +1,4 @@
-﻿using InventarioBI.Data;
+using InventarioBI.Data;
 using InventarioBI.Models;
 using InventarioBI.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -21,12 +21,44 @@ namespace InventarioBI.Controllers
         }
 
         // GET: Lista de Productos Activos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? busqueda, int? categoriaId, int? marcaId)
         {
-            var productos = await _context.Productos
+            var query = _context.Productos
+                .Include(p => p.CategoriaNavigation)
+                .Include(p => p.MarcaNavigation)
                 .Where(p => p.Activo)
-                .OrderBy(p => p.Descripcion)
-                .ToListAsync();
+                .AsQueryable();
+
+            // Filtro por texto (código de barras o descripción)
+            if (!string.IsNullOrWhiteSpace(busqueda))
+            {
+                query = query.Where(p =>
+                    p.CodigoBarras.Contains(busqueda) ||
+                    p.Descripcion.Contains(busqueda));
+            }
+
+            // Filtro por categoría
+            if (categoriaId.HasValue && categoriaId.Value > 0)
+            {
+                query = query.Where(p => p.Categoria == categoriaId.Value);
+            }
+
+            // Filtro por marca
+            if (marcaId.HasValue && marcaId.Value > 0)
+            {
+                query = query.Where(p => p.Marca == marcaId.Value);
+            }
+
+            var productos = await query.OrderBy(p => p.Descripcion).ToListAsync();
+
+            // Datos para los selectores de filtro
+            ViewBag.Categorias = await _context.Categorias.Where(c => c.Activa).OrderBy(c => c.Nombre).ToListAsync();
+            ViewBag.Marcas = await _context.Marcas.Where(m => m.Activa).OrderBy(m => m.Nombre).ToListAsync();
+
+            // Preservar los valores de búsqueda para la vista
+            ViewBag.BusquedaActual = busqueda;
+            ViewBag.CategoriaIdActual = categoriaId;
+            ViewBag.MarcaIdActual = marcaId;
 
             return View(productos);
         }

@@ -1,4 +1,4 @@
-﻿@model InventarioBI.Models.ConteoFisico
+@model InventarioBI.Models.ConteoFisico
 
 @{
     ViewData["Title"] = "Nuevo Conteo Físico";
@@ -31,8 +31,16 @@
 
             <div class="form-group mb-3">
                 <label class="form-label">Tienda</label>
-                <input type="text" value="Tienda Principal" class="form-control" disabled />
-                <input asp-for="IdTienda" type="hidden" value="1" />
+                <select asp-for="IdTienda" class="form-select" required>
+                    <option value="">-- Seleccione una tienda --</option>
+                    @foreach (var item in ViewBag.Tiendas)
+                    {
+                        <option value="@item.IdTienda">
+                            @item.Nombre
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="IdTienda" class="text-danger"></span>
             </div>
 
         </div>

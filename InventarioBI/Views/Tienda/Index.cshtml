@@ -1,0 +1,53 @@
+@model IEnumerable<Tienda>
+
+@{
+    ViewData["Title"] = "Gestión de Tiendas";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Gestión de Tiendas</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Nueva Tienda</a>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Distrito</th>
+                            <th>Región</th>
+                            <th>Área (m²)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@item.Distrito</td>
+                                <td>@item.Region</td>
+                                <td>@item.AreaM2.ToString("N2") m²</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.IdTienda" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+                                    <a asp-action="Delete" asp-route-id="@item.IdTienda" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

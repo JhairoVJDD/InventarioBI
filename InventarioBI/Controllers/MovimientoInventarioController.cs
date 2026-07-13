@@ -1,4 +1,4 @@
-﻿using InventarioBI.Data;
+using InventarioBI.Data;
 using InventarioBI.Models;
 using InventarioBI.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +28,7 @@ namespace InventarioBI.Controllers
                 .OrderByDescending(m => m.Fecha)
                 .ToListAsync();
 
+            ViewBag.Tiendas = await _context.Tiendas.ToDictionaryAsync(t => t.IdTienda, t => t.Nombre);
             return View(movimientos);
         }
 
@@ -39,6 +40,7 @@ namespace InventarioBI.Controllers
                 .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
                 .ToListAsync();
 
+            ViewBag.Tiendas = await _context.Tiendas.OrderBy(t => t.Nombre).ToListAsync();
             return View();
         }
 
@@ -65,6 +67,7 @@ namespace InventarioBI.Controllers
                         .Where(p => p.Activo)
                         .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
                         .ToListAsync();
+                    ViewBag.Tiendas = await _context.Tiendas.OrderBy(t => t.Nombre).ToListAsync();
                     return View(movimiento);
                 }
 
@@ -93,6 +96,7 @@ namespace InventarioBI.Controllers
                 .Where(p => p.Activo)
                 .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
                 .ToListAsync();
+            ViewBag.Tiendas = await _context.Tiendas.OrderBy(t => t.Nombre).ToListAsync();
             return View(movimiento);
         }
 

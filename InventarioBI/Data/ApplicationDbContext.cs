@@ -1,4 +1,4 @@
-﻿using InventarioBI.Models;
+using InventarioBI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +42,16 @@ namespace InventarioBI.Data
                 .Property(c => c.StockSistema).HasPrecision(18, 3);
             modelBuilder.Entity<ConteoFisico>()
                 .Property(c => c.StockFisico).HasPrecision(18, 3);
+
+            modelBuilder.Entity<ConteoFisico>()
+                .HasOne(c => c.Producto)
+                .WithMany()
+                .HasForeignKey(c => c.IdProducto);
+
+            modelBuilder.Entity<MovimientoInventario>()
+                .HasOne(m => m.Producto)
+                .WithMany()
+                .HasForeignKey(m => m.IdProducto);
 
             modelBuilder.Entity<Tienda>()
                 .Property(t => t.AreaM2).HasPrecision(18, 2);

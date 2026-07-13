@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InventarioBI.Models.ConteoFisico>
+@model IEnumerable<InventarioBI.Models.ConteoFisico>
 
 <h2>Conteos Físicos Realizados</h2>
 <div class="mb-3">
@@ -14,6 +14,7 @@
         <tr>
             <th>Fecha</th>
             <th>Producto</th>
+            <th>Tienda</th>
             <th>Stock Sistema</th>
             <th>Stock Físico</th>
             <th>Diferencia</th>
@@ -24,9 +25,12 @@
     <tbody>
         @foreach (var item in Model)
         {
+            var tiendasDict = (Dictionary<int, string>)ViewBag.Tiendas;
+            var tiendaNombre = tiendasDict != null && tiendasDict.ContainsKey(item.IdTienda) ? tiendasDict[item.IdTienda] : "Desconocida";
             <tr>
                 <td>@item.FechaConteo.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@item.Producto?.Descripcion</td>
+                <td>@tiendaNombre</td>
                 <td>@item.StockSistema</td>
                 <td>@item.StockFisico</td>
                 <td>

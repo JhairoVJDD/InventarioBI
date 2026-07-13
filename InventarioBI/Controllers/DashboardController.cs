@@ -1,4 +1,4 @@
-﻿using InventarioBI.Data;
+using InventarioBI.Data;
 using InventarioBI.Models;
 using InventarioBI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +25,8 @@ namespace InventarioBI.Controllers
                 StockTotalValorizado = await _context.Productos.SumAsync(p => p.StockActual * p.PrecioCosto),
                 AnomaliasPendientes = await _context.ConteosFisicos.CountAsync(c => c.Estado == "Pendiente"),
                 TotalMovimientos = await _context.MovimientosInventario.CountAsync(),
+                TotalTiendas = await _context.Tiendas.CountAsync(),
+                TotalCategorias = await _context.Categorias.CountAsync(c => c.Activa),
 
                 // Datos para gráficos
                 MovimientosPorTipo = await _context.MovimientosInventario

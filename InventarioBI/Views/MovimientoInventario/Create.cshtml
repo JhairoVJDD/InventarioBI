@@ -1,4 +1,4 @@
-﻿@model InventarioBI.Models.MovimientoInventario
+@model InventarioBI.Models.MovimientoInventario
 
 @{
     ViewData["Title"] = "Nuevo Movimiento de Inventario";
@@ -18,6 +18,19 @@
                     {
                         <option value="@item.IdProducto">
                             @item.Descripcion (Stock actual: @item.StockActual)
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Tienda</label>
+                <select asp-for="IdTienda" class="form-select" required>
+                    <option value="">-- Seleccione una tienda --</option>
+                    @foreach (var item in ViewBag.Tiendas)
+                    {
+                        <option value="@item.IdTienda">
+                            @item.Nombre
                         </option>
                     }
                 </select>

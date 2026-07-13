@@ -1,4 +1,4 @@
-﻿using InventarioBI.Data;
+using InventarioBI.Data;
 using InventarioBI.Models;
 using InventarioBI.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +36,7 @@ namespace InventarioBI.Controllers
                 .OrderByDescending(c => c.FechaConteo)
                 .ToListAsync();
 
+            ViewBag.Tiendas = await _context.Tiendas.ToDictionaryAsync(t => t.IdTienda, t => t.Nombre);
             return View(conteos);
         }
 
@@ -46,6 +47,7 @@ namespace InventarioBI.Controllers
                 .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
                 .ToListAsync();
 
+            ViewBag.Tiendas = await _context.Tiendas.OrderBy(t => t.Nombre).ToListAsync();
             return View();
         }
 
@@ -68,6 +70,11 @@ namespace InventarioBI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Productos = await _context.Productos
+                .Where(p => p.Activo)
+                .Select(p => new { p.IdProducto, p.Descripcion, p.StockActual })
+                .ToListAsync();
+            ViewBag.Tiendas = await _context.Tiendas.OrderBy(t => t.Nombre).ToListAsync();
             return View(conteoFisico);
         }
 
@@ -80,6 +87,7 @@ namespace InventarioBI.Controllers
                 .OrderByDescending(c => c.FechaConteo)
                 .ToListAsync();
 
+            ViewBag.Tiendas = await _context.Tiendas.ToDictionaryAsync(t => t.IdTienda, t => t.Nombre);
             return View(anomalias);
         }
 
@@ -92,15 +100,16 @@ namespace InventarioBI.Controllers
 
             if (conteo == null) return NotFound();
 
+            ViewBag.Tiendas = await _context.Tiendas.ToDictionaryAsync(t => t.IdTienda, t => t.Nombre);
             return View(conteo);
         }
 
         // POST: Gestionar Anomalía
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Gestionar(int id, string nuevoEstado)
+        public async Task<IActionResult> Gestionar(int id, string Estado, string Comentario)
         {
-            if (string.IsNullOrEmpty(nuevoEstado))
+            if (string.IsNullOrEmpty(Estado))
             {
                 ModelState.AddModelError("", "Debe seleccionar un estado.");
                 return RedirectToAction(nameof(Gestionar), new { id });
@@ -112,7 +121,8 @@ namespace InventarioBI.Controllers
                 return NotFound();
             }
 
-            conteo.Estado = nuevoEstado;
+            conteo.Estado = Estado;
+            conteo.Comentario = Comentario ?? string.Empty;
 
             try
             {
@@ -138,6 +148,7 @@ namespace InventarioBI.Controllers
                 return NotFound();
             }
 
+            ViewBag.Tiendas = await _context.Tiendas.ToDictionaryAsync(t => t.IdTienda, t => t.Nombre);
             return View(conteo);
         }
     }

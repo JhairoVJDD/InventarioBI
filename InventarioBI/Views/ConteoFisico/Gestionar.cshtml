@@ -1,4 +1,4 @@
-﻿@model InventarioBI.Models.ConteoFisico
+@model InventarioBI.Models.ConteoFisico
 
 @{
     ViewData["Title"] = "Gestionar Anomalía";
@@ -6,30 +6,56 @@
 
 <h2>Gestionar Anomalía</h2>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
 <div class="card mb-4">
     <div class="card-body">
         <h5>@Model.Producto?.Descripcion</h5>
+        @{
+            var tiendasDict = (Dictionary<int, string>)ViewBag.Tiendas;
+            var tiendaNombre = tiendasDict != null && tiendasDict.ContainsKey(Model.IdTienda) ? tiendasDict[Model.IdTienda] : "Desconocida";
+        }
+        <p><strong>Tienda:</strong> @tiendaNombre</p>
         <p><strong>Stock Sistema:</strong> @Model.StockSistema</p>
         <p><strong>Stock Físico:</strong> @Model.StockFisico</p>
         <p><strong>Diferencia:</strong> <span class="text-danger fw-bold">@Model.Diferencia</span></p>
-        <p><strong>Estado Actual:</strong> <span class="badge bg-warning">@Model.Estado</span></p>
+        <p><strong>Estado Actual:</strong>
+            <span class="badge @(Model.Estado == "Pendiente" ? "bg-warning" : Model.Estado == "Investigado" ? "bg-info" : "bg-success")">
+                @Model.Estado
+            </span>
+        </p>
     </div>
 </div>
 
 <form asp-action="Gestionar" method="post">
-    <input type="hidden" asp-for="IdConteo" />
+    <input type="hidden" name="id" value="@Model.IdConteo" />
 
-    <div class="form-group mb-3">
-        <label class="form-label">Nuevo Estado</label>
-        <select asp-for="Estado" class="form-select" required>
-            <option value="Pendiente">Pendiente</option>
-            <option value="Investigado">Investigado</option>
-            <option value="Resuelto">Resuelto</option>
-        </select>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label class="form-label">Nuevo Estado</label>
+                <select name="Estado" class="form-select" required>
+                    <option value="Pendiente" selected="@(Model.Estado == "Pendiente")">Pendiente</option>
+                    <option value="Investigado" selected="@(Model.Estado == "Investigado")">Investigado</option>
+                    <option value="Resuelto" selected="@(Model.Estado == "Resuelto")">Resuelto</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Comentario / Observación</label>
+                <textarea name="Comentario" class="form-control" rows="4" placeholder="Escriba un comentario sobre la gestión de esta anomalía...">@Model.Comentario</textarea>
+            </div>
+        </div>
     </div>
 
     <div class="mt-4">
-        <button type="submit" class="btn btn-primary">Guardar Cambio</button>
-        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Cambio</button>
+        <a asp-action="Anomalias" class="btn btn-secondary">Volver a Anomalías</a>
     </div>
-</form>
+</form>

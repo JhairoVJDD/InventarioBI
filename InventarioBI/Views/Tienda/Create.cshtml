@@ -1,0 +1,64 @@
+@model Tienda
+
+@{
+    ViewData["Title"] = "Nueva Tienda";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Nueva Tienda</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre de la Tienda</label>
+                                <input asp-for="Nombre" class="form-control" required />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Distrito" class="form-label">Distrito</label>
+                                <input asp-for="Distrito" class="form-control" />
+                                <span asp-validation-for="Distrito" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Region" class="form-label">Región</label>
+                                <input asp-for="Region" class="form-control" />
+                                <span asp-validation-for="Region" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="AreaM2" class="form-label">Área en metros cuadrados (m²)</label>
+                                <input asp-for="AreaM2" class="form-control" type="number" step="0.01" required />
+                                <span asp-validation-for="AreaM2" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Crear Tienda</button>
+                        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

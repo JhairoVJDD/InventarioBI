@@ -1,4 +1,4 @@
-using InventarioBI.Models;
+    using InventarioBI.Models;
 
 namespace InventarioBI.ViewModels
 {
@@ -8,6 +8,8 @@ namespace InventarioBI.ViewModels
         public decimal StockTotalValorizado { get; set; }
         public int AnomaliasPendientes { get; set; }
         public int TotalMovimientos { get; set; }
+        public int TotalTiendas { get; set; }
+        public int TotalCategorias { get; set; }
 
         public List<MovimientoPorTipoViewModel> MovimientosPorTipo { get; set; } = new();
         public List<TopProductoViewModel> TopProductosMovimiento { get; set; } = new();
